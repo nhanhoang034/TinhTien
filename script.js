@@ -34,12 +34,12 @@ function renderTable(data) {
     let colorClass = "";
 
     if (month) {
-      // lấy số từ cột "Tháng", ví dụ "0825" -> 825
-      let num = parseInt(month.replace(/\D/g, "")); 
-      if (num % 4 === 1) colorClass = "bg-green";
-      else if (num % 4 === 2) colorClass = "bg-blue";
-      else if (num % 4 === 3) colorClass = "bg-yellow";
-      else if (num % 4 === 0) colorClass = "bg-red";
+      // Lấy 2 ký tự đầu (MM) → số tháng
+      let monthNum = parseInt(month.substring(0, 2), 10); 
+      if (monthNum % 4 === 1) colorClass = "bg-green";
+      else if (monthNum % 4 === 2) colorClass = "bg-blue";
+      else if (monthNum % 4 === 3) colorClass = "bg-yellow";
+      else if (monthNum % 4 === 0) colorClass = "bg-red";
     }
 
     let tr = `<tr class="${colorClass}">`;
