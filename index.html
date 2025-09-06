@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Chi phí phòng</title>
+  <!-- Gọi CSS -->
+  <link rel="stylesheet" href="style.css">
+  <!-- Thư viện đọc CSV -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+</head>
+<body>
+  <h1>Chi phí phòng</h1>
+
+  <!-- Bộ lọc -->
+  <label>Chọn tháng: 
+    <select id="filterMonth">
+      <option value="">Tất cả</option>
+    </select>
+  </label>
+
+  <label>Chọn khoản: 
+    <select id="filterKhoan">
+      <option value="">Tất cả</option>
+    </select>
+  </label>
+
+  <!-- Bảng dữ liệu -->
+  <table id="data-table">
+    <thead></thead>
+    <tbody></tbody>
+  </table>
+
+  <!-- Gọi JS -->
+  <script src="script.js"></script>
+</body>
+</html>
