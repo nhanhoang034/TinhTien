@@ -30,7 +30,19 @@ function renderTable(data) {
   // Body
   tbody.innerHTML = "";
   data.forEach(row => {
-    let tr = "<tr>";
+    let month = row["Tháng"];
+    let colorClass = "";
+
+    if (month) {
+      // lấy số từ cột "Tháng", ví dụ "0825" -> 825
+      let num = parseInt(month.replace(/\D/g, "")); 
+      if (num % 4 === 1) colorClass = "bg-green";
+      else if (num % 4 === 2) colorClass = "bg-blue";
+      else if (num % 4 === 3) colorClass = "bg-yellow";
+      else if (num % 4 === 0) colorClass = "bg-red";
+    }
+
+    let tr = `<tr class="${colorClass}">`;
     headers.forEach(h => {
       tr += `<td>${row[h] || ""}</td>`;
     });
