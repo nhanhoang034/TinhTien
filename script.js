@@ -1,91 +1,81 @@
-let allData = [];
+// Hàm load CSV
+async function loadCSVData() {
+  const response = await fetch("data.csv");
+  const data = await response.text();
+  return Papa.parse(data, { header: true }).data;
+}
 
-// Đọc file CSV
-Papa.parse("data.csv", {
-  download: true,
-  header: true,
-  complete: function(results) {
-    allData = results.data;
-    renderFilters(allData);
-    renderTable(allData);
+document.addEventListener("DOMContentLoaded", async () => {
+  let globalData = [];
+  try {
+    globalData = await loadCSVData();
+  } catch (e) {
+    console.error("Không thể tải dữ liệu CSV:", e);
   }
+
+  // Render bảng lần đầu
+  renderTable(globalData);
+
+  // Gán sự kiện cho dropdown
+  document.getElementById("filterMonth").addEventListener("change", () => {
+    renderTable(globalData);
+  });
+
+  document.getElementById("filterFee").addEventListener("change", () => {
+    renderTable(globalData);
+  });
+
+  // Nút reset
+  document.getElementById("resetButton").addEventListener("click", () => {
+    document.getElementById("filterMonth").value = "all";
+    document.getElementById("filterFee").value = "all";
+    renderTable(globalData);
+  });
 });
 
-// Sinh bảng
+// Hàm render bảng
 function renderTable(data) {
-  const table = document.getElementById("data-table");
+  const filterMonth = document.getElementById("filterMonth").value;
+  const filterFee = document.getElementById("filterFee").value;
+
+  // Lọc dữ liệu
+  let filteredData = data;
+  if (filterMonth !== "all") {
+    filteredData = filteredData.filter(row => row["Tháng"] === filterMonth);
+  }
+
+  // Xây bảng
+  const table = document.getElementById("dataTable");
   const thead = table.querySelector("thead");
   const tbody = table.querySelector("tbody");
+  thead.innerHTML = "";
+  tbody.innerHTML = "";
 
-  if (data.length === 0) {
-    thead.innerHTML = "";
-    tbody.innerHTML = "<tr><td colspan='10'>Không có dữ liệu</td></tr>";
+  if (filteredData.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='7'>Không có dữ liệu</td></tr>";
     return;
   }
 
-  const headers = Object.keys(data[0]);
-  thead.innerHTML = "<tr>" + headers.map(h => `<th>${h}</th>`).join("") + "</tr>";
+  // Render tiêu đề cột
+  const columns = Object.keys(filteredData[0]);
+  const headerRow = document.createElement("tr");
+  columns.forEach(col => {
+    const th = document.createElement("th");
+    th.textContent = col;
+    headerRow.appendChild(th);
+  });
+  thead.appendChild(headerRow);
 
-  tbody.innerHTML = "";
-  data.forEach(row => {
-    let month = row["Tháng"];
-    let colorClass = "";
-
-    if (month) {
-      let monthNum = parseInt(month.substring(0, 2), 10);
-      if (monthNum % 4 === 1) colorClass = "bg-green";
-      else if (monthNum % 4 === 2) colorClass = "bg-blue";
-      else if (monthNum % 4 === 3) colorClass = "bg-yellow";
-      else if (monthNum % 4 === 0) colorClass = "bg-red";
-    }
-
-    let tr = `<tr class="${colorClass}">`;
-    headers.forEach(h => {
-      tr += `<td>${row[h] || ""}</td>`;
+  // Render dữ liệu
+  filteredData.forEach(row => {
+    const tr = document.createElement("tr");
+    columns.forEach(col => {
+      if (filterFee === "all" || col === "Tháng" || col === filterFee) {
+        const td = document.createElement("td");
+        td.textContent = row[col] || "";
+        tr.appendChild(td);
+      }
     });
-    tr += "</tr>";
-    tbody.innerHTML += tr;
+    tbody.appendChild(tr);
   });
-}
-
-// Sinh bộ lọc
-function renderFilters(data) {
-  const monthSelect = document.getElementById("filterMonth");
-  const khoanSelect = document.getElementById("filterKhoan");
-
-  const months = [...new Set(data.map(r => r["Tháng"]).filter(Boolean))];
-  const khoans = [...new Set(data.map(r => r["Các khoản"]).filter(Boolean))];
-
-  months.forEach(m => {
-    monthSelect.innerHTML += `<option value="${m}">${m}</option>`;
-  });
-  khoans.forEach(k => {
-    khoanSelect.innerHTML += `<option value="${k}">${k}</option>`;
-  });
-
-  // Gắn sự kiện
-  monthSelect.addEventListener("change", applyFilters);
-  khoanSelect.addEventListener("change", applyFilters);
-
-  // Reset
-  document.getElementById("resetBtn").addEventListener("click", () => {
-    monthSelect.value = "";
-    khoanSelect.value = "";
-    document.getElementById("filterChart").value = "";
-    document.getElementById("tableContainer").style.display = "block";
-    document.getElementById("chartContainer").style.display = "none";
-    renderTable(allData);
-  });
-}
-
-// Lọc dữ liệu
-function applyFilters() {
-  const month = document.getElementById("filterMonth").value;
-  const khoan = document.getElementById("filterKhoan").value;
-
-  let filtered = allData;
-  if (month) filtered = filtered.filter(r => r["Tháng"] === month);
-  if (khoan) filtered = filtered.filter(r => r["Các khoản"] === khoan);
-
-  renderTable(filtered);
 }

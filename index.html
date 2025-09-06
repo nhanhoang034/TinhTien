@@ -2,15 +2,13 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>B.09.19</title>
+  <title>Quản lý tiền phòng</title>
   <link rel="stylesheet" href="style.css">
   <!-- Thư viện PapaParse để đọc CSV -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
-  <!-- Thư viện Chart.js để vẽ biểu đồ -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <h1 style="text-align:center;">It's Nhân</h1>
+  <h1 style="text-align:center;">It's Nhân Hoàng</h1>
 
   <div id="controls" style="text-align:center; margin-bottom:20px;">
     <label for="filterMonth">Lọc theo tháng: </label>
@@ -30,15 +28,6 @@
       <option value="nước">Nước</option>
     </select>
 
-    <label for="filterChart">Vẽ biểu đồ điện nước của </label>
-    <select id="filterChart">
-      <option value="" selected>...</option>
-      <option value="all">Tất cả</option>
-      <option value="6">6 tháng vừa qua</option>
-      <option value="12">12 tháng vừa qua</option>
-    </select>
-    tháng
-
     <button id="resetButton">Reset</button>
   </div>
 
@@ -50,12 +39,6 @@
     </table>
   </div>
 
-  <!-- Biểu đồ -->
-  <div id="chartContainer" style="width:80%; margin:auto; display:none;">
-    <canvas id="chartCanvas"></canvas>
-  </div>
-
   <script src="script.js"></script>
-  <script src="chart.js"></script>
 </body>
 </html>
