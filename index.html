@@ -4,52 +4,57 @@
   <meta charset="UTF-8">
   <title>B.09.19</title>
   <link rel="stylesheet" href="style.css">
-  <!-- PapaParse để đọc CSV -->
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
-  <!-- Chart.js -->
+  <!-- Thư viện PapaParse để đọc CSV -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <!-- Thư viện Chart.js để vẽ biểu đồ -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <h1>It's Nhân</h1>
+  <h1 style="text-align:center;">It's Nhân</h1>
 
-  <!-- Bộ lọc -->
-  <label>Lọc theo tháng: 
+  <div id="controls" style="text-align:center; margin-bottom:20px;">
+    <label for="filterMonth">Lọc theo tháng: </label>
     <select id="filterMonth">
-      <option value="">Tất cả</option>
-    </select>
-  </label>
-
-  <label>Lọc theo khoản phí: 
-    <select id="filterKhoan">
-      <option value="">Tất cả</option>
-    </select>
-  </label>
-
-  <label>Vẽ biểu đồ điện nước của 
-    <select id="filterChart">
-      <option value="">...</option>
       <option value="all">Tất cả</option>
-      <option value="6">6</option>
-      <option value="12">12</option>
-    </select> tháng vừa qua
-  </label>
+      <!-- sẽ được thêm các tháng từ CSV -->
+    </select>
 
-  <button id="resetBtn">Reset</button>
+    <label for="filterFee">Lọc theo khoản: </label>
+    <select id="filterFee">
+      <option value="all">Tất cả</option>
+      <option value="Phí quản lí">Phí quản lí</option>
+      <option value="wifi">Wifi</option>
+      <option value="môi trường">Môi trường</option>
+      <option value="gửi xe">Gửi xe</option>
+      <option value="điện">Điện</option>
+      <option value="nước">Nước</option>
+    </select>
+
+    <label for="filterChart">Vẽ biểu đồ điện nước của </label>
+    <select id="filterChart">
+      <option value="" selected>...</option>
+      <option value="all">Tất cả</option>
+      <option value="6">6 tháng vừa qua</option>
+      <option value="12">12 tháng vừa qua</option>
+    </select>
+    tháng
+
+    <button id="resetButton">Reset</button>
+  </div>
 
   <!-- Bảng dữ liệu -->
-  <div id="tableContainer">
-    <table id="data-table">
+  <div id="tableContainer" style="width:90%; margin:auto;">
+    <table id="dataTable" border="1" style="width:100%; border-collapse:collapse; text-align:center;">
       <thead></thead>
       <tbody></tbody>
     </table>
   </div>
 
-  <!-- Canvas biểu đồ (ẩn mặc định) -->
-  <div id="chartContainer" style="display:none;">
-    <canvas id="costChart"></canvas>
+  <!-- Biểu đồ -->
+  <div id="chartContainer" style="width:80%; margin:auto; display:none;">
+    <canvas id="chartCanvas"></canvas>
   </div>
 
-  <!-- JS -->
   <script src="script.js"></script>
   <script src="chart.js"></script>
 </body>
