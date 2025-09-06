@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("resetButton").addEventListener("click", () => {
     document.getElementById("filterMonth").value = "all";
     document.getElementById("filterFee").value = "all";
-    document.getElementById("filterChart").value = "";
+    document.getElementById("filterChart").value = ""; // về mặc định "..."
     document.getElementById("tableContainer").style.display = "block";
     document.getElementById("chartContainer").style.display = "none";
     renderTable(globalData); // gọi lại hàm renderTable trong script.js
@@ -69,8 +69,7 @@ function renderChart(data, choice) {
     alert("Không tìm thấy dữ liệu Điện/Nước hợp lệ trong file CSV.");
     document.getElementById("tableContainer").style.display = "block";
     document.getElementById("chartContainer").style.display = "none";
-    document.getElementById("filterChart").value = "";
-    return;
+    return; // KHÔNG reset filterChart nữa
   }
 
   // sắp xếp theo thời gian tăng dần
