@@ -23,19 +23,16 @@ function renderTable(data) {
     return;
   }
 
-  // Header
   const headers = Object.keys(data[0]);
   thead.innerHTML = "<tr>" + headers.map(h => `<th>${h}</th>`).join("") + "</tr>";
 
-  // Body
   tbody.innerHTML = "";
   data.forEach(row => {
     let month = row["Tháng"];
     let colorClass = "";
 
     if (month) {
-      // Lấy 2 ký tự đầu (MM) → số tháng
-      let monthNum = parseInt(month.substring(0, 2), 10); 
+      let monthNum = parseInt(month.substring(0, 2), 10);
       if (monthNum % 4 === 1) colorClass = "bg-green";
       else if (monthNum % 4 === 2) colorClass = "bg-blue";
       else if (monthNum % 4 === 3) colorClass = "bg-yellow";
@@ -69,6 +66,16 @@ function renderFilters(data) {
   // Gắn sự kiện
   monthSelect.addEventListener("change", applyFilters);
   khoanSelect.addEventListener("change", applyFilters);
+
+  // Reset
+  document.getElementById("resetBtn").addEventListener("click", () => {
+    monthSelect.value = "";
+    khoanSelect.value = "";
+    document.getElementById("filterChart").value = "";
+    document.getElementById("tableContainer").style.display = "block";
+    document.getElementById("chartContainer").style.display = "none";
+    renderTable(allData);
+  });
 }
 
 // Lọc dữ liệu

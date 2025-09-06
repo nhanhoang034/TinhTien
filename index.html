@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <title>B.09.19</title>
-  <!-- Gọi CSS -->
   <link rel="stylesheet" href="style.css">
-  <!-- Thư viện đọc CSV -->
+  <!-- PapaParse để đọc CSV -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <h1>It's Nhân</h1>
@@ -24,13 +25,32 @@
     </select>
   </label>
 
-  <!-- Bảng dữ liệu -->
-  <table id="data-table">
-    <thead></thead>
-    <tbody></tbody>
-  </table>
+  <label>Vẽ biểu đồ điện nước của 
+    <select id="filterChart">
+      <option value="">...</option>
+      <option value="all">Tất cả</option>
+      <option value="6">6</option>
+      <option value="12">12</option>
+    </select> tháng vừa qua
+  </label>
 
-  <!-- Gọi JS -->
+  <button id="resetBtn">Reset</button>
+
+  <!-- Bảng dữ liệu -->
+  <div id="tableContainer">
+    <table id="data-table">
+      <thead></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Canvas biểu đồ (ẩn mặc định) -->
+  <div id="chartContainer" style="display:none;">
+    <canvas id="costChart"></canvas>
+  </div>
+
+  <!-- JS -->
   <script src="script.js"></script>
+  <script src="chart.js"></script>
 </body>
 </html>
