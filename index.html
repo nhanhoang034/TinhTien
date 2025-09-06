@@ -2,43 +2,35 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Quản lý tiền phòng</title>
+  <title>B.09.19</title>
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css">
-  <!-- Thư viện PapaParse để đọc CSV -->
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <!-- Thư viện đọc CSV -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
 </head>
 <body>
-  <h1 style="text-align:center;">It's Nhân Hoàng</h1>
+  <h1>It's Nhân</h1>
 
-  <div id="controls" style="text-align:center; margin-bottom:20px;">
-    <label for="filterMonth">Lọc theo tháng: </label>
+  <!-- Bộ lọc -->
+  <label>Chọn tháng: 
     <select id="filterMonth">
-      <option value="all">Tất cả</option>
-      <!-- sẽ được thêm các tháng từ CSV -->
+      <option value="">Tất cả</option>
     </select>
+  </label>
 
-    <label for="filterFee">Lọc theo khoản: </label>
-    <select id="filterFee">
-      <option value="all">Tất cả</option>
-      <option value="Phí quản lí">Phí quản lí</option>
-      <option value="wifi">Wifi</option>
-      <option value="môi trường">Môi trường</option>
-      <option value="gửi xe">Gửi xe</option>
-      <option value="điện">Điện</option>
-      <option value="nước">Nước</option>
+  <label>Chọn khoản: 
+    <select id="filterKhoan">
+      <option value="">Tất cả</option>
     </select>
-
-    <button id="resetButton">Reset</button>
-  </div>
+  </label>
 
   <!-- Bảng dữ liệu -->
-  <div id="tableContainer" style="width:90%; margin:auto;">
-    <table id="dataTable" border="1" style="width:100%; border-collapse:collapse; text-align:center;">
-      <thead></thead>
-      <tbody></tbody>
-    </table>
-  </div>
+  <table id="data-table">
+    <thead></thead>
+    <tbody></tbody>
+  </table>
 
+  <!-- JS -->
   <script src="script.js"></script>
 </body>
 </html>
